@@ -2,12 +2,12 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class IconTextField extends StatelessWidget {
+  const IconTextField({
     Key? key,
     required this.hintText,
-    required this.iconData,
     this.isEmail = false,
+    required this.iconData,
   }) : super(key: key);
 
   final String hintText;

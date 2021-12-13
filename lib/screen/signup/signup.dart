@@ -4,26 +4,27 @@ import 'package:flutter_food_delivery_v1/compoment/passwordfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  static final formState = GlobalKey<FormState>();
+class _SignUpScreenState extends State<SignUpScreen> {
+  static final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
           child: Form(
-        key: formState,
+        key: formKey,
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 25),
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -56,10 +57,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 60,
+                      height: 30,
                     ),
                     const Text(
-                      "Đăng nhập vào tài khoản",
+                      "Đăng kí tài khoản",
                       style: TextStyle(
                           fontSize: defautfontsize + 10,
                           fontWeight: FontWeight.bold),
@@ -69,23 +70,19 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     const TextFieldContainer(
                       child: IconTextField(
-                        hintText: "Tài khoản..",
-                        iconData: Icons.email,
-                        isEmail: true,
-                      ),
+                          hintText: "Tên người dùng", iconData: Icons.person),
+                    ),
+                    const TextFieldContainer(
+                      child: IconTextField(
+                          hintText: "Email", iconData: Icons.email),
                     ),
                     const TextFieldContainer(
                         child: CustomPasswordField(
                       hintText: "Mật khẩu...",
                     )),
                     const Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Text("Quên mật khẩu ?"),
-                    ),
-                    const Spacer(),
                     CustomButton(
-                      text: "Đăng nhập",
+                      text: "Đăng ký",
                       onPress: () {},
                     ),
                     const SizedBox(

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_food_delivery_v1/screen/rate/rate.dart';
+import 'package:flutter_food_delivery_v1/screen/signup/fillbio.dart';
+import 'package:flutter_food_delivery_v1/screen/signup/location.dart';
+import 'package:flutter_food_delivery_v1/screen/signup/uploadavatar.dart';
 
 import 'screen/signin/signin.dart';
+import 'screen/signup/signup.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +27,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         fontFamily: "RobotoSlab",
       ),
-      home: const SignInScreen(),
+      home: const Rate(
+        tittle: "Hoàn tất đơn hàng",
+        subtittle: "Tài xế",
+      ),
     );
   }
 }
