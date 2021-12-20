@@ -32,8 +32,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.0
-  simple_star_rating: ^0.0.3
+  flutter_rating_bar: ^4.0.0
   circular_profile_avatar: ^2.0.5
+  flutter_map: any
+  flutter_map_marker_cluster: any
+  latlong2: ^0.8.1
+  geolocator: ^8.0.1
+
 
 dev_dependencies:
   flutter_lints: ^1.0.0

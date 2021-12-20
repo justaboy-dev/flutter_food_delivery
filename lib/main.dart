@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_food_delivery_v1/screen/map_pick/mappick.dart';
 import 'package:flutter_food_delivery_v1/screen/rate/rate.dart';
 import 'package:flutter_food_delivery_v1/screen/signup/fillbio.dart';
 import 'package:flutter_food_delivery_v1/screen/signup/location.dart';
@@ -20,17 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.black,
-        fontFamily: "RobotoSlab",
-      ),
-      home: const Rate(
-        tittle: "Hoàn tất đơn hàng",
-        subtittle: "Tài xế",
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: Colors.black,
+          fontFamily: "RobotoSlab",
+        ),
+        darkTheme: ThemeData(scaffoldBackgroundColor: Colors.black26),
+        home: const MapPick());
   }
 }
