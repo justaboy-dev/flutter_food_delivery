@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 
 class IconTextField extends StatelessWidget {
@@ -8,15 +9,32 @@ class IconTextField extends StatelessWidget {
     required this.hintText,
     this.isEmail = false,
     required this.iconData,
+    this.controller,
+    this.onChanged,
+    required this.inputType,
+    this.maxleght,
+    this.onTap,
   }) : super(key: key);
 
   final String hintText;
   final IconData iconData;
   final bool isEmail;
+  final TextEditingController? controller;
+  final ValueChanged? onChanged;
+  final TextInputType inputType;
+  final int? maxleght;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      onTap: onTap,
+      onChanged: onChanged,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      inputFormatters:
+          maxleght == null ? [] : [LengthLimitingTextInputFormatter(maxleght)],
+      keyboardType: inputType,
       decoration: InputDecoration(
           border: InputBorder.none,
           icon: Icon(

@@ -4,7 +4,9 @@ import 'package:flutter_food_delivery_v1/compoment/passwordfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/signupcontroller.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  static final formKey = GlobalKey<FormState>();
+  final SignUpController controller = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: SafeArea(
           child: Form(
-        key: formKey,
+        key: controller.formKey,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
           child: CustomScrollView(
@@ -68,22 +70,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const TextFieldContainer(
+                    TextFieldContainer(
                       child: IconTextField(
-                          hintText: "Tên người dùng", iconData: Icons.person),
+                          controller: controller.usernameController,
+                          inputType: TextInputType.multiline,
+                          hintText: "Tên người dùng",
+                          iconData: Icons.person),
                     ),
-                    const TextFieldContainer(
+                    TextFieldContainer(
                       child: IconTextField(
-                          hintText: "Email", iconData: Icons.email),
+                          controller: controller.phonenumberController,
+                          inputType: TextInputType.emailAddress,
+                          hintText: "Số điện thoại",
+                          iconData: Icons.phone),
                     ),
-                    const TextFieldContainer(
+                    TextFieldContainer(
                         child: CustomPasswordField(
+                      controller: controller.passwordController,
                       hintText: "Mật khẩu...",
                     )),
                     const Spacer(),
                     CustomButton(
                       text: "Đăng ký",
-                      onPress: () {},
+                      onPress: controller.onSignUp,
                     ),
                     const SizedBox(
                       height: 20,

@@ -4,7 +4,9 @@ import 'package:flutter_food_delivery_v1/compoment/passwordfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/signincontroller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -14,14 +16,15 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  static final formState = GlobalKey<FormState>();
+  final SignInController controller = Get.put(SignInController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
           child: Form(
-        key: formState,
+        key: controller.formState,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
           child: CustomScrollView(
@@ -67,26 +70,29 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const TextFieldContainer(
+                    TextFieldContainer(
                       child: IconTextField(
-                        hintText: "Tài khoản..",
-                        iconData: Icons.email,
-                        isEmail: true,
+                        inputType: TextInputType.number,
+                        maxleght: 10,
+                        controller: controller.phoneNumberController,
+                        hintText: "Số điện thoại",
+                        iconData: Icons.phone,
                       ),
                     ),
-                    const TextFieldContainer(
+                    TextFieldContainer(
                         child: CustomPasswordField(
+                      controller: controller.passwordController,
                       hintText: "Mật khẩu...",
                     )),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: controller.onForgotPass,
                       child: const Text("Quên mật khẩu ?"),
                     ),
                     const Spacer(),
                     CustomButton(
                       text: "Đăng nhập",
-                      onPress: () {},
+                      onPress: controller.onLogin,
                     ),
                     const SizedBox(
                       height: 20,

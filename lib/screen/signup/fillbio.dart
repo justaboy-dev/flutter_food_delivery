@@ -3,7 +3,8 @@ import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/compoment/normaltextfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
-import 'package:flutter_food_delivery_v1/screen/signin/signin.dart';
+import 'package:flutter_food_delivery_v1/controller/fillbiocontroller.dart';
+import 'package:get/get.dart';
 
 class FillBioScreen extends StatefulWidget {
   const FillBioScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class FillBioScreen extends StatefulWidget {
 }
 
 class _FillBioScreenState extends State<FillBioScreen> {
-  static final formKey = GlobalKey<FormState>();
+  final FillBioController controller = Get.put(FillBioController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class _FillBioScreenState extends State<FillBioScreen> {
     return Scaffold(
       body: SafeArea(
         child: Form(
-          key: formKey,
+          key: controller.formKey,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: CustomScrollView(
@@ -43,7 +44,7 @@ class _FillBioScreenState extends State<FillBioScreen> {
                         size: size.width * 0.07,
                         color: primaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: () => Get.back(),
                     ),
                   ),
                 ),
@@ -79,29 +80,26 @@ class _FillBioScreenState extends State<FillBioScreen> {
                       const SizedBox(
                         height: 40,
                       ),
-                      const TextFieldContainer(
+                      TextFieldContainer(
                         radius: 13,
                         child: NormalTextField(
-                          hintText: "Họ",
+                          controller: controller.emailController,
+                          hintText: "Họ và tên",
                         ),
                       ),
-                      const TextFieldContainer(
+                      TextFieldContainer(
                         radius: 13,
                         child: NormalTextField(
-                          hintText: "Tên",
-                        ),
-                      ),
-                      const TextFieldContainer(
-                        radius: 13,
-                        child: NormalTextField(
-                          hintText: "Số điện thoại",
-                          inputType: TextInputType.number,
-                          maxleght: 10,
+                          controller: controller.fullnameController,
+                          hintText: "Email",
+                          isEmail: true,
+                          inputType: TextInputType.emailAddress,
                         ),
                       ),
                       const Spacer(),
                       Center(
-                        child: CustomButton(text: "Kế tiếp", onPress: () {}),
+                        child: CustomButton(
+                            text: "Kế tiếp", onPress: controller.onNext),
                       ),
                       const SizedBox(
                         height: 20,

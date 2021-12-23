@@ -2,28 +2,21 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/foodratecontroller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class Rate extends StatefulWidget {
-  const Rate(
-      {Key? key,
-      required this.tittle,
-      required this.subtittle,
-      required this.onSubmit,
-      required this.onNext})
-      : super(key: key);
-
-  final String tittle;
-  final String subtittle;
-  final VoidCallback onSubmit;
-  final VoidCallback onNext;
+class FoodRate extends StatefulWidget {
+  const FoodRate({
+    Key? key,
+  }) : super(key: key);
   @override
-  _RateState createState() => _RateState();
+  _FoodRateState createState() => _FoodRateState();
 }
 
-class _RateState extends State<Rate> {
-  double rate = 3;
+class _FoodRateState extends State<FoodRate> {
+  final FoodRateController controller = Get.put(FoodRateController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,18 +59,18 @@ class _RateState extends State<Rate> {
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  widget.tittle,
-                  style: const TextStyle(
+                const Text(
+                  "Hãy thưởng thức !",
+                  style: TextStyle(
                       fontSize: defautfontsize + 15,
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Vui lòng đánh giá " + widget.subtittle,
-                  style: const TextStyle(
+                const Text(
+                  "Vui lòng đánh giá về món ăn",
+                  style: TextStyle(
                     fontSize: defautfontsize,
                   ),
                 ),
@@ -85,6 +78,7 @@ class _RateState extends State<Rate> {
                   height: 30,
                 ),
                 RatingBar(
+                    updateOnDrag: true,
                     initialRating: 5,
                     allowHalfRating: true,
                     minRating: 1,
@@ -99,14 +93,14 @@ class _RateState extends State<Rate> {
                             width: MediaQuery.of(context).size.width * 0.09),
                         half: SvgPicture.asset("assets/icons/half_star.svg",
                             width: MediaQuery.of(context).size.width * 0.09)),
-                    onRatingUpdate: (rating) {}),
+                    onRatingUpdate: (rating) => controller.onRate(rating)),
                 const Spacer(
                   flex: 3,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomButton(text: "Đồng ý", onPress: widget.onSubmit),
+                    CustomButton(text: "Đồng ý", onPress: controller.onSubmit),
                     const SizedBox(
                       width: 10,
                     ),
@@ -114,7 +108,7 @@ class _RateState extends State<Rate> {
                         gradient: const LinearGradient(
                             colors: [Colors.black12, Colors.black45]),
                         text: "Bỏ qua",
-                        onPress: widget.onNext),
+                        onPress: controller.onNext),
                   ],
                 ),
                 const Spacer(),

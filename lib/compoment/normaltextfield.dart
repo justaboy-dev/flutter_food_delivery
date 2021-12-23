@@ -6,22 +6,26 @@ class NormalTextField extends StatelessWidget {
     Key? key,
     required this.hintText,
     this.isEmail = false,
-    this.iconData,
     this.acceptNull = false,
     this.inputType = TextInputType.text,
     this.maxleght,
+    this.controller,
+    this.onChanged,
   }) : super(key: key);
 
   final String hintText;
-  final IconData? iconData;
   final bool isEmail;
   final bool acceptNull;
   final TextInputType inputType;
   final int? maxleght;
+  final TextEditingController? controller;
+  final ValueChanged? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      onChanged: onChanged,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       inputFormatters:
           maxleght == null ? [] : [LengthLimitingTextInputFormatter(maxleght)],

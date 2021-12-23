@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery_v1/compoment/button.dart';
+import 'package:flutter_food_delivery_v1/compoment/normaltextfield.dart';
+import 'package:flutter_food_delivery_v1/controller/mappickcontroller.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapPick extends StatefulWidget {
@@ -10,62 +14,73 @@ class MapPick extends StatefulWidget {
   _MapPickState createState() => _MapPickState();
 }
 
-late final Position latLng;
-
 class _MapPickState extends State<MapPick> {
-  Future<Position> getLocation() async {
-    var serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error("Service doesn't enable");
-    }
-
-    var permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error("Location access denied");
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error("Location access denied");
-    }
-    return Geolocator.getCurrentPosition();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getLocation().then((position) {
-      setState(() {
-        latLng = position;
-      });
-    });
-  }
-
+  final MappickController controller = Get.put(MappickController());
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: FlutterMap(
-      options: MapOptions(
-        center: LatLng(latLng.latitude, latLng.longitude),
-        zoom: 15.0,
-      ),
-      layers: [
-        TileLayerOptions(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: ['a', 'b', 'c']),
-        MarkerLayerOptions(
-          rotate: true,
-          markers: [
-            Marker(
-              width: 80.0,
-              height: 80.0,
-              point: LatLng(latLng.latitude, latLng.longitude),
-              builder: (ctx) => const FlutterLogo(),
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: NormalTextField(
+          controller: controller.textEditingController,
+          hintText: "Tìm kiếm",
         ),
-      ],
-    ));
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: controller.onSearch,
+              icon: SvgPicture.asset(
+                "assets/icons/search.svg",
+                width: size.width * 0.08,
+              ))
+        ],
+      ),
+      body: Stack(
+        children: [
+          Obx(() => FlutterMap(
+                mapController: controller.mapController,
+                options: MapOptions(
+                  onPositionChanged: (position, hasGesture) {
+                    controller.onLocationChanged(position, hasGesture);
+                  },
+                  center: LatLng(controller.position.value.latitude,
+                      controller.position.value.longitude),
+                  zoom: 14.0,
+                  maxZoom: 17,
+                ),
+                layers: [
+                  TileLayerOptions(
+                      urlTemplate:
+                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                      subdomains: ['a', 'b', 'c']),
+                  MarkerLayerOptions(rotate: true, markers: [
+                    Marker(
+                      width: 30.0,
+                      height: 30.0,
+                      point: LatLng(controller.position.value.latitude,
+                          controller.position.value.longitude),
+                      builder: (ctx) => SvgPicture.asset(
+                        "assets/icons/location.svg",
+                      ),
+                    )
+                  ])
+                ],
+              )),
+          Positioned(
+              bottom: 0,
+              left: 20,
+              right: 20,
+              child: CustomButton(text: "Chọn", onPress: () {})),
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 60),
+        child: IconButton(
+            onPressed: controller.moveLocation,
+            icon: const Icon(Icons.my_location_rounded)),
+      ),
+    );
   }
 }

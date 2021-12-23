@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/uploadavatarcontroller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class UploadAvatar extends StatelessWidget {
   const UploadAvatar({Key? key}) : super(key: key);
@@ -9,6 +11,9 @@ class UploadAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final UpLoadAvatarController controller = Get.put(UpLoadAvatarController());
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -32,7 +37,7 @@ class UploadAvatar extends StatelessWidget {
                       size: size.width * 0.07,
                       color: primaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () => Get.back(),
                   ),
                 ),
               ),
@@ -67,7 +72,7 @@ class UploadAvatar extends StatelessWidget {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: controller.onChooseImage,
                       child: Container(
                         padding: const EdgeInsets.all(60),
                         decoration: BoxDecoration(
@@ -82,7 +87,8 @@ class UploadAvatar extends StatelessWidget {
                     ),
                     const Spacer(),
                     Center(
-                      child: CustomButton(text: "Kế tiếp", onPress: () {}),
+                      child: CustomButton(
+                          text: "Kế tiếp", onPress: controller.onNext),
                     ),
                     const SizedBox(
                       height: 20,

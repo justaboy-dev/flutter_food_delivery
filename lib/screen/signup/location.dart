@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/locationpickcontroller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class LocationPick extends StatelessWidget {
   const LocationPick({Key? key}) : super(key: key);
@@ -9,6 +11,9 @@ class LocationPick extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final LocationPickController controller = Get.put(LocationPickController());
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -32,7 +37,7 @@ class LocationPick extends StatelessWidget {
                       size: size.width * 0.07,
                       color: primaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () => Get.back(),
                   ),
                 ),
               ),
@@ -91,7 +96,7 @@ class LocationPick extends StatelessWidget {
                     ),
                     CustomButton(
                       text: "Chọn vị trí",
-                      onPress: () {},
+                      onPress: controller.onChooseLocation,
                       width: size.width * 0.8,
                       gradient: const LinearGradient(
                           colors: [Colors.black26, Colors.black38]),
@@ -100,7 +105,8 @@ class LocationPick extends StatelessWidget {
                       flex: 3,
                     ),
                     Center(
-                      child: CustomButton(text: "Kế tiếp", onPress: () {}),
+                      child: CustomButton(
+                          text: "Kế tiếp", onPress: controller.onNext),
                     ),
                     const SizedBox(
                       height: 20,
