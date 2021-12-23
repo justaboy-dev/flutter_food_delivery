@@ -108,7 +108,7 @@ class HomePage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            height: 180,
+            height: 220,
             child: controller.obx(
               (state) => ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -119,6 +119,7 @@ class HomePage extends StatelessWidget {
                     foodModel: controller.food.value[index],
                   );
                 },
+                shrinkWrap: true,
               ),
               onLoading: const CustomLoadingIndicator(),
             ),
@@ -137,7 +138,9 @@ class HomePage extends StatelessWidget {
               );
             }, childCount: 10),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
+              crossAxisCount: 2,
+              childAspectRatio: 0.85,
+            ),
           ),
         ),
       ],
