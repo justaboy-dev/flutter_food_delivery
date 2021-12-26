@@ -12,6 +12,7 @@ class FoodBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {},
       child: AspectRatio(
@@ -47,13 +48,26 @@ class FoodBuilder extends StatelessWidget {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Row(
                   children: [
-                    const Icon(Icons.location_on_outlined),
-                    Text(foodModel.foodSpace.toString()),
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: size.width * 0.035,
+                    ),
+                    Text(
+                      foodModel.foodSpace.toString() + " km",
+                      style: const TextStyle(fontSize: defautfontsize - 4),
+                    ),
                     const Spacer(),
-                    const Icon(Icons.timer_sharp),
+                    Icon(
+                      Icons.timer_sharp,
+                      size: size.width * 0.035,
+                    ),
+                    Text(
+                      foodModel.foodMinute.toString() + " min",
+                      style: const TextStyle(fontSize: defautfontsize - 4),
+                    ),
                   ],
                 ),
               ),

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
-import 'package:flutter_food_delivery_v1/screen/homescreen/homescreen.dart';
+import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -13,10 +13,75 @@ class HomePageSreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeScreenController controller = Get.put(HomeScreenController());
+    final ShoppingCartController shoppingCartController =
+        Get.put(ShoppingCartController());
     return Scaffold(
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: const HomePage(),
+          child: Obx(() => Stack(
+                children: [
+                  PageView(
+                    children: [
+                      controller.screen[controller.currentIndex.value]
+                    ],
+                  ),
+                  controller.currentIndex.value == 0 &&
+                          shoppingCartController.listFood.value.isNotEmpty
+                      ? Positioned(
+                          bottom: 5,
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: () => controller.changeIndex(2),
+                            child: Container(
+                              height: 60,
+                              width: 60,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: primaryColor),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(13)),
+                              child: Center(
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Icon(
+                                      Icons.shopping_cart_outlined,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.09,
+                                      color: primaryColor,
+                                    ),
+                                    Positioned(
+                                      top: -5,
+                                      right: -5,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.red),
+                                        child: Center(
+                                          child: Text(
+                                            shoppingCartController
+                                                .listFood.value.length
+                                                .toString(),
+                                            style: const TextStyle(
+                                                fontSize: defautfontsize - 2,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container()
+                ],
+              )),
         ),
         bottomNavigationBar: Obx(
           () => Padding(

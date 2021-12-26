@@ -32,6 +32,7 @@ dependencies:
   email_validator: ^2.0.1
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
   flutter_map: any
   flutter_map_marker_cluster: any
   flutter_rating_bar: ^4.0.0
@@ -39,10 +40,10 @@ dependencies:
   geocoding: ^2.0.1
   geolocator: ^8.0.1
   get: ^4.6.1
+  get_storage: ^2.0.3
   latlong2: ^0.8.1
-  open_route_service: ^1.1.0
-  flutter_dotenv: ^5.0.2
   loading_indicator: ^3.0.2
+  open_route_service: ^1.1.0
   salomon_bottom_bar: ^3.2.0
 
 dev_dependencies:

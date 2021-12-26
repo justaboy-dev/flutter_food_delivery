@@ -9,19 +9,25 @@ class CustomButton extends StatelessWidget {
     this.width = 150,
     this.textColor = Colors.white,
     this.gradient = linnear,
+    this.heigh = 50,
+    this.horizontal = 10,
+    this.vertical = 10,
   }) : super(key: key);
 
   final String text;
   final VoidCallback onPress;
   final double width;
+  final double heigh;
+  final double horizontal;
+  final double vertical;
   final Color textColor;
   final LinearGradient gradient;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: 50,
-      margin: const EdgeInsets.all(10),
+      height: heigh,
+      margin: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), gradient: gradient),
       child: TextButton(

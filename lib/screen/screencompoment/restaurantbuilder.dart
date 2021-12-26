@@ -7,9 +7,11 @@ class RestaurantBuilder extends StatelessWidget {
   const RestaurantBuilder({
     Key? key,
     required this.restaurantModel,
+    this.width = 120,
   }) : super(key: key);
 
   final RestaurantModel restaurantModel;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class RestaurantBuilder extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: 120,
+            width: width,
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(

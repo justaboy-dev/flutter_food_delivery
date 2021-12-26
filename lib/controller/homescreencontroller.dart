@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
 import 'package:flutter_food_delivery_v1/model/restaurantmodel.dart';
+import 'package:flutter_food_delivery_v1/screen/homescreen/homescreen.dart';
+import 'package:flutter_food_delivery_v1/screen/shoppingcart/shoppingcartscreen.dart';
 import 'package:flutter_food_delivery_v1/service/fetchdata.dart';
 import 'package:get/get.dart';
 
@@ -16,13 +18,24 @@ class HomeScreenController extends GetxController with StateMixin {
   TextEditingController findController = TextEditingController();
   ScrollController scrollController = ScrollController();
 
+  List<Widget> screen = [
+    const HomePage(),
+    Container(
+      color: Colors.green,
+    ),
+    const ShoppingCartScreen(),
+    Container(
+      color: Colors.blue,
+    )
+  ];
+
   FetchData fetchData = FetchData();
   @override
   void onInit() {
     super.onInit();
     fetchRestaurant();
     fetchFood();
-    //fetchNearestFood();
+    fetchNearestFood();
   }
 
   void fetchRestaurant() async {
@@ -33,25 +46,32 @@ class HomeScreenController extends GetxController with StateMixin {
 
   void fetchFood() async {
     change(null, status: RxStatus.loading());
+    Random random = Random();
     var restaurant = await fetchData.fetchRestaurant();
     for (var item in restaurant) {
-      food.value += item.restaurantFood;
-      nearestFood.value += item.restaurantFood;
+      for (var fooditem in item.restaurantFood) {
+        fooditem.foodSpace = random.nextInt(10) +
+            double.parse(random.nextDouble().toStringAsFixed(1));
+        fooditem.foodMinute = double.parse(
+            (fooditem.foodSpace / 40 * 60 + 10).toStringAsFixed(1));
+        food.add(fooditem);
+      }
     }
-    //print(food.value[0]);
     change(null, status: RxStatus.success());
   }
 
   void fetchNearestFood() async {
     change(null, status: RxStatus.loading());
+    Random random = Random();
     var restaurant = await fetchData.fetchRestaurant();
     for (var item in restaurant) {
-      nearestFood.value += item.restaurantFood;
-    }
-    double space = 5;
-    Random random = Random();
-    for (var item in nearestFood.value) {
-      item.foodSpace = space + random.nextDouble();
+      for (var fooditem in item.restaurantFood) {
+        fooditem.foodSpace = random.nextInt(10) +
+            double.parse(random.nextDouble().toStringAsFixed(1));
+        fooditem.foodMinute = double.parse(
+            (fooditem.foodSpace / 40 * 60 + 10).toStringAsFixed(1));
+        nearestFood.add(fooditem);
+      }
     }
     nearestFood.sort((a, b) => a.foodSpace.compareTo(b.foodSpace));
     change(null, status: RxStatus.success());
@@ -59,14 +79,6 @@ class HomeScreenController extends GetxController with StateMixin {
 
   void changeIndex(int index) {
     currentIndex.value = index;
-  }
-
-  void onOpenMenuBar() {
-    Get.bottomSheet(
-      Container(
-        color: Colors.red,
-      ),
-    );
   }
 
   void onSearchBarTap() {

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
+import 'package:flutter_food_delivery_v1/screen/restaurantscreen/restaurantscreen.dart';
 import 'package:flutter_food_delivery_v1/screen/screencompoment/foodbuilder.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
 import 'package:flutter_food_delivery_v1/screen/screencompoment/restaurantbuilder.dart';
@@ -61,36 +62,25 @@ class HomePage extends StatelessWidget {
                 iconData: Icons.search,
                 inputType: TextInputType.text),
           ),
-          // actions: [
-          //   Container(
-          //     width: 55,
-          //     height: 20,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(10),
-          //         color: primaryColor.withOpacity(0.2)),
-          //     child: IconButton(
-          //         onPressed: controller.onOpenMenuBar,
-          //         icon: Icon(
-          //           Icons.menu,
-          //           size: size.width * 0.1,
-          //           color: primaryColor,
-          //         )),
-          //   )
-          // ],
         ),
         HomeBannerTittle(
           tittle: "Nhà hàng nổi bật",
-          onNext: () {},
+          onNext: () => Get.to(
+            const RestaurantScreen(),
+            transition: Transition.rightToLeft,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
+          ),
         ),
         SliverToBoxAdapter(
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             height: 180,
             child: controller.obx(
               (state) => ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 5,
+                itemCount: controller.restaurant.value.isEmpty ? 0 : 5,
                 itemBuilder: (context, index) {
                   return RestaurantBuilder(
                     restaurantModel: controller.restaurant.value[index],
@@ -107,13 +97,13 @@ class HomePage extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             height: 220,
             child: controller.obx(
               (state) => ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 10,
+                itemCount: controller.food.value.isEmpty ? 0 : 10,
                 itemBuilder: (context, index) {
                   return FoodBuilder(
                     foodModel: controller.food.value[index],
@@ -127,21 +117,18 @@ class HomePage extends StatelessWidget {
         ),
         HomeBannerTittle(tittle: "Món ăn gần bạn", onNext: () {}),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          sliver: SliverGrid(
-            delegate: SliverChildBuilderDelegate((builder, index) {
-              return controller.obx(
-                (state) => FoodBuilder(
-                  foodModel: controller.nearestFood.value[index],
+          padding: const EdgeInsets.all(0),
+          sliver: Obx(() => SliverGrid(
+                delegate: SliverChildBuilderDelegate((builder, index) {
+                  return FoodBuilder(
+                    foodModel: controller.nearestFood.value[index],
+                  );
+                }, childCount: controller.nearestFood.value.length),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.85,
                 ),
-                onLoading: const CustomLoadingIndicator(),
-              );
-            }, childCount: 10),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.85,
-            ),
-          ),
+              )),
         ),
       ],
     );
