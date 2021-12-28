@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
+import 'package:flutter_food_delivery_v1/screen/foodscreen/foodscreen.dart';
 import 'package:flutter_food_delivery_v1/screen/restaurantscreen/restaurantscreen.dart';
 import 'package:flutter_food_delivery_v1/screen/screencompoment/foodbuilder.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
@@ -66,9 +67,9 @@ class HomePage extends StatelessWidget {
         HomeBannerTittle(
           tittle: "Nhà hàng nổi bật",
           onNext: () => Get.to(
-            const RestaurantScreen(),
+            () => const RestaurantScreen(),
             transition: Transition.rightToLeft,
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 400),
             curve: Curves.fastOutSlowIn,
           ),
         ),
@@ -93,7 +94,12 @@ class HomePage extends StatelessWidget {
         ),
         HomeBannerTittle(
           tittle: "Món ăn nổi bật",
-          onNext: () {},
+          onNext: () => Get.to(
+            () => const FoodScreen(),
+            transition: Transition.rightToLeft,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.fastOutSlowIn,
+          ),
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -106,7 +112,7 @@ class HomePage extends StatelessWidget {
                 itemCount: controller.food.value.isEmpty ? 0 : 10,
                 itemBuilder: (context, index) {
                   return FoodBuilder(
-                    foodModel: controller.food.value[index],
+                    food: controller.food.value[index],
                   );
                 },
                 shrinkWrap: true,
@@ -121,7 +127,7 @@ class HomePage extends StatelessWidget {
           sliver: Obx(() => SliverGrid(
                 delegate: SliverChildBuilderDelegate((builder, index) {
                   return FoodBuilder(
-                    foodModel: controller.nearestFood.value[index],
+                    food: controller.nearestFood.value[index],
                   );
                 }, childCount: controller.nearestFood.value.length),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

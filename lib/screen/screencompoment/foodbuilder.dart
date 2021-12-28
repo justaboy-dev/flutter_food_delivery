@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
+import 'package:flutter_food_delivery_v1/screen/fooddetails/fooddetails.dart';
+import 'package:get/get.dart';
 
 class FoodBuilder extends StatelessWidget {
   const FoodBuilder({
     Key? key,
-    required this.foodModel,
+    required this.food,
   }) : super(key: key);
 
-  final FoodModel foodModel;
+  final FoodModel food;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.to(
+        () => FoodDetails(food: food),
+        transition: Transition.rightToLeft,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.fastOutSlowIn,
+      ),
       child: AspectRatio(
         aspectRatio: 0.7,
         child: Container(
@@ -31,14 +38,13 @@ class FoodBuilder extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(foodModel.foodImage)),
+                      fit: BoxFit.cover, image: NetworkImage(food.foodImage)),
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
               const Spacer(),
               Text(
-                foodModel.foodName,
+                food.foodName,
                 softWrap: true,
                 style: const TextStyle(
                     fontSize: defautfontsize - 3,
@@ -56,7 +62,7 @@ class FoodBuilder extends StatelessWidget {
                       size: size.width * 0.035,
                     ),
                     Text(
-                      foodModel.foodSpace.toString() + " km",
+                      food.foodSpace.toString() + " km",
                       style: const TextStyle(fontSize: defautfontsize - 4),
                     ),
                     const Spacer(),
@@ -65,7 +71,7 @@ class FoodBuilder extends StatelessWidget {
                       size: size.width * 0.035,
                     ),
                     Text(
-                      foodModel.foodMinute.toString() + " min",
+                      food.foodMinute.toString() + " min",
                       style: const TextStyle(fontSize: defautfontsize - 4),
                     ),
                   ],

@@ -19,26 +19,47 @@ class RestaurantScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  const Text(
-                    "Nhà hàng \nNổi bật",
-                    style: TextStyle(
-                      fontSize: defautfontsize + 30,
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 10),
+              sliver: SliverAppBar(
+                elevation: 0,
+                floating: true,
+                backgroundColor: Colors.white,
+                pinned: true,
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: primaryColor.withOpacity(0.2)),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.chevron_left,
+                      size: size.width * 0.07,
                       color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Righteous",
                     ),
-                    softWrap: true,
-                    textAlign: TextAlign.left,
+                    onPressed: () => Get.back(),
                   ),
-                  const Spacer(),
+                ),
+                actions: [
                   SvgPicture.asset(
                     "assets/images/restaurant.svg",
                     width: size.width * 0.2,
                   ),
                 ],
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Text(
+                "Nhà hàng nổi bật",
+                style: TextStyle(
+                  fontSize: defautfontsize + 30,
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Righteous",
+                ),
+                softWrap: true,
+                textAlign: TextAlign.left,
               ),
             ),
             const SliverToBoxAdapter(
