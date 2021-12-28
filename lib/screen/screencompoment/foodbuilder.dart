@@ -18,7 +18,7 @@ class FoodBuilder extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.to(
         () => FoodDetails(food: food),
-        transition: Transition.rightToLeft,
+        transition: Transition.rightToLeftWithFade,
         duration: const Duration(milliseconds: 400),
         curve: Curves.fastOutSlowIn,
       ),

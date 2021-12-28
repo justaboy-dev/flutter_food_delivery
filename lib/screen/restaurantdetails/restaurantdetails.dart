@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
 import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
+import 'package:flutter_food_delivery_v1/model/restaurantmodel.dart';
 import 'package:get/get.dart';
 import 'package:we_slide/we_slide.dart';
 
-class FoodDetails extends StatelessWidget {
-  const FoodDetails({Key? key, required this.food}) : super(key: key);
+class RestaurantDetails extends StatelessWidget {
+  const RestaurantDetails({Key? key, required this.restaurant})
+      : super(key: key);
 
-  final FoodModel food;
+  final RestaurantModel restaurant;
   @override
   Widget build(BuildContext context) {
-    final ShoppingCartController controller = Get.find();
+    final HomeScreenController controller = Get.find();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
@@ -27,13 +30,13 @@ class FoodDetails extends StatelessWidget {
           transformScaleEnd: 0.8,
           parallax: true,
           parallaxOffset: 0.4,
-          footer: CustomButton(
-            text: "Add",
-            onPress: () => controller.onAdd(food),
-            horizontal: 30,
-          ),
-          footerHeight: 70,
-          hideFooter: false,
+          // footer: CustomButton(
+          //   text: "Add",
+          //   onPress: () => controller.onAdd(food),
+          //   horizontal: 30,
+          // ),
+          // footerHeight: 70,
+          // hideFooter: false,
           appBar: Row(
             children: [
               Container(
@@ -59,7 +62,7 @@ class FoodDetails extends StatelessWidget {
               borderRadius: BorderRadius.circular(13),
               color: Colors.red,
               image: DecorationImage(
-                image: NetworkImage(food.foodImage),
+                image: NetworkImage(restaurant.restaurantImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -81,7 +84,7 @@ class FoodDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food.foodName,
+                        restaurant.restaurantName,
                         style: const TextStyle(
                           fontSize: defautfontsize + 10,
                           fontWeight: FontWeight.bold,
@@ -98,15 +101,17 @@ class FoodDetails extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          Text(food.foodSpace.toString() + " km"),
+                          Text(restaurant.restaurantSpace.toString() + " km"),
                           const Spacer(
                             flex: 1,
                           ),
-                          const Icon(Icons.timer),
+                          const Icon(Icons.access_time),
                           const SizedBox(
-                            width: 5,
+                            width: 4,
                           ),
-                          Text(food.foodMinute.toString() + " min"),
+                          Text(restaurant.restaurantOpenTime
+                              .format(context)
+                              .toString()),
                           const Spacer(
                             flex: 4,
                           ),
@@ -115,12 +120,10 @@ class FoodDetails extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      Text(
-                        food.foodDescription.toString(),
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                          fontSize: defautfontsize + 3,
-                        ),
+                      const Text(
+                        "Danh sách món ăn",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: defautfontsize + 5),
                       ),
                     ],
                   ),

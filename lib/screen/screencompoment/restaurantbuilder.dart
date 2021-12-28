@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/model/restaurantmodel.dart';
+import 'package:flutter_food_delivery_v1/screen/restaurantdetails/restaurantdetails.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class RestaurantBuilder extends StatelessWidget {
   const RestaurantBuilder({
@@ -17,7 +19,12 @@ class RestaurantBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.to(
+        () => RestaurantDetails(restaurant: restaurantModel),
+        duration: const Duration(milliseconds: 400),
+        transition: Transition.rightToLeftWithFade,
+        curve: Curves.fastOutSlowIn,
+      ),
       child: Stack(
         children: [
           Container(

@@ -65,9 +65,10 @@ class HomeScreenController extends GetxController with StateMixin {
     Random random = Random();
     var restaurant = await fetchData.fetchRestaurant();
     for (var item in restaurant) {
+      item.restaurantSpace = random.nextInt(10) +
+          double.parse(random.nextDouble().toStringAsFixed(1));
       for (var fooditem in item.restaurantFood) {
-        fooditem.foodSpace = random.nextInt(10) +
-            double.parse(random.nextDouble().toStringAsFixed(1));
+        fooditem.foodSpace = item.restaurantSpace;
         fooditem.foodMinute = double.parse(
             (fooditem.foodSpace / 40 * 60 + 10).toStringAsFixed(1));
         nearestFood.add(fooditem);
