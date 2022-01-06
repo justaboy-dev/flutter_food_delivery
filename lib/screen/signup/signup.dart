@@ -72,16 +72,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     TextFieldContainer(
                       child: IconTextField(
-                          controller: controller.usernameController,
-                          inputType: TextInputType.multiline,
-                          hintText: "Tên người dùng",
-                          iconData: Icons.person),
-                    ),
-                    TextFieldContainer(
-                      child: IconTextField(
                           controller: controller.phonenumberController,
-                          inputType: TextInputType.emailAddress,
+                          inputType: TextInputType.number,
                           hintText: "Số điện thoại",
+                          maxleght: 10,
                           iconData: Icons.phone),
                     ),
                     TextFieldContainer(

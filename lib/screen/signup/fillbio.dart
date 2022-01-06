@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 class FillBioScreen extends StatefulWidget {
   const FillBioScreen({Key? key}) : super(key: key);
-
   @override
   State<FillBioScreen> createState() => _FillBioScreenState();
 }
@@ -83,23 +82,22 @@ class _FillBioScreenState extends State<FillBioScreen> {
                       TextFieldContainer(
                         radius: 13,
                         child: NormalTextField(
-                          controller: controller.emailController,
-                          hintText: "Họ và tên",
+                          controller: controller.firstname,
+                          hintText: "Họ",
                         ),
                       ),
                       TextFieldContainer(
                         radius: 13,
                         child: NormalTextField(
-                          controller: controller.fullnameController,
-                          hintText: "Email",
-                          isEmail: true,
-                          inputType: TextInputType.emailAddress,
+                          controller: controller.lastname,
+                          hintText: "Tên",
                         ),
                       ),
                       const Spacer(),
                       Center(
                         child: CustomButton(
-                            text: "Kế tiếp", onPress: controller.onNext),
+                            text: "Kế tiếp",
+                            onPress: () => controller.onNext()),
                       ),
                       const SizedBox(
                         height: 20,

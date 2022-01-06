@@ -79,14 +79,25 @@ class LocationPick extends StatelessWidget {
                           "assets/icons/location.svg",
                           width: size.width * 0.08,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text(
-                            "Vị trí của bạn",
-                            style: TextStyle(
-                                fontSize: defautfontsize + 5,
-                                fontWeight: FontWeight.bold),
-                            softWrap: true,
+                        Container(
+                          width: size.width * 0.78,
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: controller.obx(
+                            (state) => Text(
+                              controller.address.value,
+                              style: const TextStyle(
+                                  fontSize: defautfontsize + 5,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                              softWrap: true,
+                            ),
+                            onEmpty: const Text(
+                              "Vị trí của bạn",
+                              style: TextStyle(
+                                  fontSize: defautfontsize + 5,
+                                  fontWeight: FontWeight.bold),
+                              softWrap: true,
+                            ),
                           ),
                         )
                       ],

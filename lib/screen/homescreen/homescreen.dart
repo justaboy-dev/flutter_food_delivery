@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: 180,
+            height: 250,
             child: controller.obx(
               (state) => ListView.builder(
                 scrollDirection: Axis.horizontal,

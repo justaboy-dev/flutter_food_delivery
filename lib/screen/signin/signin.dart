@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
+import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
 import 'package:flutter_food_delivery_v1/compoment/passwordfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/icontextfield.dart';
 import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
@@ -90,10 +91,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: const Text("Quên mật khẩu ?"),
                     ),
                     const Spacer(),
-                    CustomButton(
-                      text: "Đăng nhập",
-                      onPress: controller.onLogin,
-                    ),
+                    controller.obx(
+                        (state) => CustomButton(
+                              text: "Đăng nhập",
+                              onPress: controller.onLogin,
+                            ),
+                        onLoading: const SizedBox(
+                          child: CustomLoadingIndicator(),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),

@@ -72,14 +72,14 @@ class RestaurantScreen extends StatelessWidget {
               sliver: Obx(() => SliverGrid(
                     delegate: SliverChildBuilderDelegate((builder, index) {
                       return RestaurantBuilder(
-                        width: 200,
+                        width: 180,
                         restaurantModel: controller.restaurant.value[index],
                       );
                     }, childCount: controller.restaurant.value.length),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.85,
+                      childAspectRatio: 0.8,
                     ),
                   )),
             ),

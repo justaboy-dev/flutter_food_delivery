@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_food_delivery_v1/service/authencation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'screen/mainscreen/mainscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,13 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Food Delivery',
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.black,
           fontFamily: "RobotoSlab",
         ),
         darkTheme: ThemeData(scaffoldBackgroundColor: Colors.black26),
-        home: const HomePageSreen());
+        home: Authencation().handleLogin());
   }
 }

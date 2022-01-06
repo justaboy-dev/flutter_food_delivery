@@ -25,23 +25,36 @@ class RestaurantBuilder extends StatelessWidget {
         transition: Transition.rightToLeftWithFade,
         curve: Curves.fastOutSlowIn,
       ),
-      child: Stack(
+      child: Column(
         children: [
           Container(
             width: width,
+            height: 150,
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               border: Border.all(color: primaryColor.withOpacity(0.8)),
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(restaurantModel.restaurantImage)),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          Positioned(
-            top: 15,
-            right: 20,
+          Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              width: width,
+              height: 40,
+              child: Text(
+                restaurantModel.restaurantName,
+                softWrap: true,
+                style: const TextStyle(
+                    fontSize: defautfontsize - 3,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              )),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            width: width,
             child: Row(
               children: [
                 Text(restaurantModel.restaurantRate.toString()),
@@ -55,30 +68,9 @@ class RestaurantBuilder extends StatelessWidget {
                       )
                     : SvgPicture.asset("assets/icons/star.svg",
                         width: size.width * 0.04),
+                const Spacer()
               ],
             ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 5,
-            right: 5,
-            child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(18),
-                        bottomRight: Radius.circular(18)),
-                    color: primaryColor.withOpacity(0.2)),
-                height: 30,
-                child: Text(
-                  restaurantModel.restaurantName,
-                  softWrap: true,
-                  style: const TextStyle(
-                      fontSize: defautfontsize - 3,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                )),
           ),
         ],
       ),

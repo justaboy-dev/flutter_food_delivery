@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
-import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
-import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
-import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
 import 'package:flutter_food_delivery_v1/model/restaurantmodel.dart';
+import 'package:flutter_food_delivery_v1/screen/screencompoment/foodbuilder.dart';
 import 'package:get/get.dart';
 import 'package:we_slide/we_slide.dart';
 
@@ -15,28 +12,20 @@ class RestaurantDetails extends StatelessWidget {
   final RestaurantModel restaurant;
   @override
   Widget build(BuildContext context) {
-    final HomeScreenController controller = Get.find();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: WeSlide(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           isDismissible: true,
-          panelMaxSize: size.height * 0.8,
-          panelMinSize: size.height * 0.3,
+          panelMaxSize: size.height * 0.85,
+          panelMinSize: size.height * 0.2,
           hideAppBar: false,
           transformScale: true,
           transformScaleEnd: 0.8,
           parallax: true,
           parallaxOffset: 0.4,
-          // footer: CustomButton(
-          //   text: "Add",
-          //   onPress: () => controller.onAdd(food),
-          //   horizontal: 30,
-          // ),
-          // footerHeight: 70,
-          // hideFooter: false,
           appBar: Row(
             children: [
               Container(
@@ -60,18 +49,19 @@ class RestaurantDetails extends StatelessWidget {
           body: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(13),
-              color: Colors.red,
+              color: Colors.white,
               image: DecorationImage(
                 image: NetworkImage(restaurant.restaurantImage),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          panel: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            slivers: [
-              SliverFillRemaining(
-                child: Container(
+          panel: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  height: 190,
                   padding: const EdgeInsets.all(20),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -92,9 +82,7 @@ class RestaurantDetails extends StatelessWidget {
                         ),
                         softWrap: true,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const Spacer(),
                       Row(
                         children: [
                           const Icon(Icons.location_on_outlined),
@@ -117,9 +105,7 @@ class RestaurantDetails extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      const Spacer(),
                       const Text(
                         "Danh sách món ăn",
                         textAlign: TextAlign.left,
@@ -128,8 +114,28 @@ class RestaurantDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
-            ],
+                SizedBox(
+                  height: size.height * 0.75 - 190,
+                  child: CustomScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    slivers: [
+                      SliverGrid(
+                        delegate: SliverChildBuilderDelegate((builder, index) {
+                          return FoodBuilder(
+                            food: restaurant.restaurantFood[index],
+                          );
+                        }, childCount: restaurant.restaurantFood.length),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.85,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

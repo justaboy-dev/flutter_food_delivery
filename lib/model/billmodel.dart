@@ -6,13 +6,14 @@ class BillModel {
   String driverID;
   String status;
   double cash;
+  double rate;
   List<FoodModel> food;
 
   BillModel(this.userID, this.restaurantID, this.driverID, this.status,
-      this.cash, this.food);
+      this.cash, this.food, this.rate);
   factory BillModel.fromMap(Map<String, dynamic> map) {
     return BillModel(map["userID"], map["restaurantID"], map["driverID"],
-        map["status"], map["cash"], map["food"]);
+        map["status"], map["cash"], map["food"], map["rate"]);
   }
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -22,6 +23,7 @@ class BillModel {
       "status": status,
       "cash": cash,
       "food": food,
+      "rate": rate,
     };
   }
 }

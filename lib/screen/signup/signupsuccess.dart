@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/screen/mainscreen/mainscreen.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class SignUpSuccess extends StatelessWidget {
   const SignUpSuccess({Key? key}) : super(key: key);
@@ -41,7 +43,14 @@ class SignUpSuccess extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
-                CustomButton(text: "Đặt món ngay", onPress: () {}),
+                CustomButton(
+                    text: "Đặt món ngay",
+                    onPress: () => Get.offAll(
+                          () => const HomePageSreen(),
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.fastOutSlowIn,
+                          transition: Transition.rightToLeftWithFade,
+                        )),
                 const Spacer(),
               ],
             ),

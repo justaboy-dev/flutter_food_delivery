@@ -1,29 +1,25 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
-import 'package:flutter_food_delivery_v1/service/fetchdata.dart';
+import 'package:flutter_food_delivery_v1/service/getstorage.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class ShoppingCartController extends GetxController with StateMixin {
   RxDouble total = 0.0.obs;
   RxList<FoodModel> listFood = <FoodModel>[].obs;
 
-  final box = GetStorage();
-
   @override
   void onInit() {
     super.onInit();
+    listFood.clear();
     loadShopingCart();
   }
 
   void loadShopingCart() {
     change(null, status: RxStatus.loading());
-    var list = getFromStorage();
+    var list = GetStorageService().getFromStorage();
     if (list.isEmpty) {
       change(null, status: RxStatus.empty());
     } else {
@@ -33,28 +29,10 @@ class ShoppingCartController extends GetxController with StateMixin {
     }
   }
 
-  List<FoodModel> getFromStorage() {
-    var item = box.read("listShoppingCart");
-    List<FoodModel> listFoodFromStorage = [];
-    if (item == null) {
-      return listFoodFromStorage;
-    } else {
-      dynamic decode = jsonDecode(item);
-      listFoodFromStorage =
-          decode.map<FoodModel>((e) => FoodModel.fromMap(e)).toList();
-    }
-    return listFoodFromStorage;
-  }
-
-  void pushToStorage(List<FoodModel> pushItem) {
-    box.write("listShoppingCart",
-        jsonEncode(pushItem.map((e) => e.toMap()).toList()));
-  }
-
   void onDissmissed(FoodModel food) {
     change(null, status: RxStatus.loading());
     listFood.value.removeWhere((element) => element.foodID == food.foodID);
-    pushToStorage(listFood.value);
+    GetStorageService().pushToStorage(listFood.value);
     updateTotal();
     listFood.value.isEmpty
         ? change(null, status: RxStatus.empty())
@@ -67,14 +45,14 @@ class ShoppingCartController extends GetxController with StateMixin {
         .where((element) => element.foodID == food.foodID)
         .first
         .foodAmount;
-    if (amount == 1) {
+    if (amount < 2) {
       onDissmissed(food);
     } else {
       listFood.value
           .where((element) => element.foodID == food.foodID)
           .first
           .foodAmount--;
-      pushToStorage(listFood.value);
+      GetStorageService().pushToStorage(listFood.value);
       updateTotal();
     }
     listFood.value.isEmpty
@@ -104,7 +82,7 @@ class ShoppingCartController extends GetxController with StateMixin {
 
   void onAdd(FoodModel food) {
     change(null, status: RxStatus.loading());
-    var listItem = getFromStorage();
+    var listItem = GetStorageService().getFromStorage();
     var isExist =
         listItem.firstWhereOrNull((element) => element.foodID == food.foodID);
     if (isExist == null) {
@@ -114,7 +92,7 @@ class ShoppingCartController extends GetxController with StateMixin {
           .firstWhere((element) => element.foodID == food.foodID)
           .foodAmount++;
     }
-    pushToStorage(listItem);
+    GetStorageService().pushToStorage(listItem);
     final shoppingCartController = Get.find<ShoppingCartController>();
     shoppingCartController.loadShopingCart();
     Get.snackbar(
@@ -132,8 +110,9 @@ class ShoppingCartController extends GetxController with StateMixin {
         style: TextStyle(
             fontSize: defautfontsize + 5, fontWeight: FontWeight.bold),
       )),
-      animationDuration: const Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 200),
       isDismissible: true,
+      duration: const Duration(milliseconds: 1500),
     );
     change(null, status: RxStatus.success());
   }

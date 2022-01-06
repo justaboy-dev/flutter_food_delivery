@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
@@ -7,7 +9,6 @@ import 'package:get/get.dart';
 
 class UploadAvatar extends StatelessWidget {
   const UploadAvatar({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,8 +30,9 @@ class UploadAvatar extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: primaryColor.withOpacity(0.2)),
+                    borderRadius: BorderRadius.circular(15),
+                    color: primaryColor.withOpacity(0.2),
+                  ),
                   child: IconButton(
                     icon: Icon(
                       Icons.chevron_left,
@@ -74,14 +76,25 @@ class UploadAvatar extends StatelessWidget {
                     GestureDetector(
                       onTap: controller.onChooseImage,
                       child: Container(
-                        padding: const EdgeInsets.all(60),
+                        width: size.width * 0.8,
+                        height: size.height * 0.45,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: primaryColor.withOpacity(0.8), width: 3),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: SvgPicture.asset(
-                          "assets/icons/gallery.svg",
-                          width: size.width * 0.3,
+                          border: Border.all(
+                              color: primaryColor.withOpacity(0.8), width: 3),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: controller.obx(
+                          (state) => Image.file(
+                            File(controller.filePath.value),
+                            fit: BoxFit.cover,
+                          ),
+                          onEmpty: Padding(
+                            padding: const EdgeInsets.all(60.0),
+                            child: SvgPicture.asset(
+                              "assets/icons/gallery.svg",
+                              width: size.width * 0.3,
+                            ),
+                          ),
                         ),
                       ),
                     ),

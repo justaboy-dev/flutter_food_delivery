@@ -23,23 +23,23 @@ class FoodBuilder extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
       ),
       child: AspectRatio(
-        aspectRatio: 0.7,
+        aspectRatio: 0.75,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           decoration: BoxDecoration(
               border: Border.all(color: primaryColor.withOpacity(0.6)),
               borderRadius: BorderRadius.circular(13)),
-          width: 160,
+          width: 150,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: 120,
+                height: 140,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(food.foodImage)),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
               const Spacer(),

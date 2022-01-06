@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery_v1/service/location.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,25 +20,6 @@ class MappickController extends GetxController {
   final MapController mapController = MapController();
   final TextEditingController textEditingController = TextEditingController();
 
-  Future<Position> getLocation() async {
-    var serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error("Service doesn't enable");
-    }
-
-    var permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error("Location access denied");
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error("Location access denied");
-    }
-    return Geolocator.getCurrentPosition();
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -51,9 +33,9 @@ class MappickController extends GetxController {
   }
 
   void moveLocation() {
-    getLocation().then((value) {
+    LocationService().getLocation().then((value) {
       position.value = value;
-      mapController.move(LatLng(value.latitude, value.longitude), 14);
+      mapController.move(LatLng(value.latitude, value.longitude), 17);
     });
     update();
   }
@@ -91,5 +73,9 @@ class MappickController extends GetxController {
     }
     // print(await placemarkFromCoordinates(
     //     position.center!.latitude, position.center!.longitude));
+  }
+
+  void onNext() async {
+    Get.back(result: position.value);
   }
 }

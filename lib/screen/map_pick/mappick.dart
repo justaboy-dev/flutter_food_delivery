@@ -72,7 +72,8 @@ class _MapPickState extends State<MapPick> {
               bottom: 0,
               left: 20,
               right: 20,
-              child: CustomButton(text: "Chọn", onPress: () {})),
+              child: CustomButton(
+                  text: "Chọn", onPress: () => controller.onNext())),
         ],
       ),
       floatingActionButton: Padding(
