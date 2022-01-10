@@ -1,11 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:flutter_food_delivery_v1/screen/screencompoment/shoppingcartitem.dart';
+import 'package:flutter_food_delivery_v1/service/appservice.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +16,7 @@ class ShoppingCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ShoppingCartController());
+    final controller = Get.find<ShoppingCartController>();
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -53,8 +55,11 @@ class ShoppingCartScreen extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: controller.listFood.value.length,
                           itemBuilder: (context, index) {
-                            return ShoppingCartItem(
-                                food: controller.listFood.value[index]);
+                            return FadeInRightBig(
+                              delay: Duration(milliseconds: 200 * index),
+                              child: ShoppingCartItem(
+                                  food: controller.listFood.value[index]),
+                            );
                           },
                         ),
                     onLoading: const CustomLoadingIndicator(),
@@ -78,43 +83,46 @@ class ShoppingCartScreen extends StatelessWidget {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: primaryColor),
-                          color: Colors.white),
-                      height: 140,
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "Tổng cộng:",
-                                style: TextStyle(
-                                    fontSize: defautfontsize + 5,
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const Spacer(),
-                              Text(
-                                controller.total.value.toString() + " VNĐ",
-                                style: const TextStyle(
-                                    fontSize: defautfontsize + 5,
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          CustomButton(
-                            text: "Đặt hàng ngay",
-                            onPress: () {},
-                            width: 400,
-                            vertical: 5,
-                            horizontal: 5,
-                          )
-                        ],
+                    child: FadeInUpBig(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: primaryColor),
+                            color: Colors.white),
+                        height: 140,
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Tổng cộng:",
+                                  style: TextStyle(
+                                      fontSize: defautfontsize + 5,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  AppService().toMoney(controller.total.value) +
+                                      " VNĐ",
+                                  style: const TextStyle(
+                                      fontSize: defautfontsize + 5,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            CustomButton(
+                              text: "Đặt hàng ngay",
+                              onPress: () => controller.onBooking(),
+                              width: 400,
+                              vertical: 5,
+                              horizontal: 5,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

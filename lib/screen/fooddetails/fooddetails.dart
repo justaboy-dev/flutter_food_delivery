@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
@@ -27,10 +28,13 @@ class FoodDetails extends StatelessWidget {
           transformScaleEnd: 0.8,
           parallax: true,
           parallaxOffset: 0.4,
-          footer: CustomButton(
-            text: "Add",
-            onPress: () => controller.onAdd(food),
-            horizontal: 30,
+          footer: FadeInUp(
+            duration: const Duration(milliseconds: 1200),
+            child: CustomButton(
+              text: "Add",
+              onPress: () => controller.onAdd(food),
+              horizontal: 30,
+            ),
           ),
           footerHeight: 70,
           hideFooter: false,
@@ -54,79 +58,85 @@ class FoodDetails extends StatelessWidget {
               const Spacer(),
             ],
           ),
-          body: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(13),
-              color: Colors.red,
-              image: DecorationImage(
-                image: NetworkImage(food.foodImage),
-                fit: BoxFit.cover,
+          body: ZoomIn(
+            duration: const Duration(milliseconds: 1300),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                color: Colors.red,
+                image: DecorationImage(
+                  image: NetworkImage(food.foodImage),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-          panel: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            slivers: [
-              SliverFillRemaining(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
+          panel: FadeInUp(
+            duration: const Duration(milliseconds: 1200),
+            child: CustomScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              slivers: [
+                SliverFillRemaining(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                      ),
+                      color: Colors.white,
                     ),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        food.foodName,
-                        style: const TextStyle(
-                          fontSize: defautfontsize + 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          food.foodName,
+                          style: const TextStyle(
+                            fontSize: defautfontsize + 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                          softWrap: true,
                         ),
-                        softWrap: true,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on_outlined),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(food.foodSpace.toString() + " km"),
-                          const Spacer(
-                            flex: 1,
-                          ),
-                          const Icon(Icons.timer),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(food.foodMinute.toString() + " min"),
-                          const Spacer(
-                            flex: 4,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        food.foodDescription.toString(),
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                          fontSize: defautfontsize + 3,
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(food.foodSpace.toString() + " km"),
+                            const Spacer(
+                              flex: 1,
+                            ),
+                            const Icon(Icons.timer),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(food.foodMinute.toString() + " min"),
+                            const Spacer(
+                              flex: 4,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          food.foodDescription.toString(),
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                            fontSize: defautfontsize + 3,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

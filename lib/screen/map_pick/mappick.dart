@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/compoment/normaltextfield.dart';
+import 'package:flutter_food_delivery_v1/compoment/textfieldcontainer.dart';
 import 'package:flutter_food_delivery_v1/controller/mappickcontroller.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,7 @@ class _MapPickState extends State<MapPick> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         title: NormalTextField(
           controller: controller.textEditingController,
           hintText: "Tìm kiếm",

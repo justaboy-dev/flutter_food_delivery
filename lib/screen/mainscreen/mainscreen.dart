@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
-import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -13,8 +12,6 @@ class HomePageSreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeScreenController controller = Get.put(HomeScreenController());
-    final ShoppingCartController shoppingCartController =
-        Get.put(ShoppingCartController());
     return Scaffold(
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -26,7 +23,7 @@ class HomePageSreen extends StatelessWidget {
                     ],
                   ),
                   controller.currentIndex.value == 0 &&
-                          shoppingCartController.listFood.value.isNotEmpty
+                          controller.numberOfItem.value != 0
                       ? Positioned(
                           bottom: 5,
                           right: 10,
@@ -63,8 +60,7 @@ class HomePageSreen extends StatelessWidget {
                                             color: Colors.red),
                                         child: Center(
                                           child: Text(
-                                            shoppingCartController
-                                                .listFood.value.length
+                                            controller.numberOfItem.value
                                                 .toString(),
                                             style: const TextStyle(
                                                 fontSize: defautfontsize - 2,

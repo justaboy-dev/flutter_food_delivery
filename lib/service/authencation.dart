@@ -12,8 +12,9 @@ import 'package:get/get.dart';
 class Authencation extends GetConnect {
   Future<Response> checkExitPhoneNumber(String phoneNumber) async {
     Response response;
-    response = await post(dotenv.env["BASEURL"].toString() + "user/checkexist",
-        {"PhoneNumber": phoneNumber});
+    response = await get(
+      dotenv.env["BASEURL"].toString() + "user/checkexist/" + phoneNumber,
+    );
     return response;
   }
 
@@ -51,12 +52,44 @@ class Authencation extends GetConnect {
 
   Future<void> saveUser(String phoneNumber) async {
     Response res;
-    res = await post(dotenv.env["BASEURL"].toString() + "user/getbyphone", {
-      "PhoneNumber": phoneNumber,
-    });
+
+    String url =
+        dotenv.env["BASEURL"].toString() + "user/getuserbyphone/" + phoneNumber;
+
+    res = await get(url);
+
     if (res.statusCode == 200) {
       GetStorageService()
           .writeUser(UserModel.fromMap(jsonDecode(res.bodyString.toString())));
+    }
+  }
+
+  Future<UserModel> getUserByID(String userID) async {
+    Response res;
+
+    String url = dotenv.env["BASEURL"].toString() + "user/" + userID;
+
+    res = await get(url);
+
+    if (res.statusCode == 200) {
+      return UserModel.fromMap(jsonDecode(res.bodyString.toString()));
+    } else {
+      return Future.error("");
+    }
+  }
+
+  Future<bool> updateUser(UserModel user) async {
+    Response res;
+
+    String url =
+        dotenv.env["BASEURL"].toString() + "user/" + user.userID.toString();
+
+    res = await put(url, jsonEncode(user.toMap()));
+
+    if (res.statusCode == 200) {
+      return Future.value(true);
+    } else {
+      return Future.value(false);
     }
   }
 
@@ -67,9 +100,9 @@ class Authencation extends GetConnect {
     } else {
       bool isFirstLogin = GetStorageService().readFirstLogin();
       if (isFirstLogin) {
-        return const OnboardScreen();
-      } else {
         return const WelComeScreen();
+      } else {
+        return const OnboardScreen();
       }
     }
   }

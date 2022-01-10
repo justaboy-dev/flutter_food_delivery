@@ -19,12 +19,11 @@ class RestaurantBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Get.to(
-        () => RestaurantDetails(restaurant: restaurantModel),
-        duration: const Duration(milliseconds: 400),
-        transition: Transition.rightToLeftWithFade,
-        curve: Curves.fastOutSlowIn,
-      ),
+      onTap: () => Get.to(() => const RestaurantDetails(),
+          duration: const Duration(milliseconds: 400),
+          transition: Transition.rightToLeftWithFade,
+          curve: Curves.fastOutSlowIn,
+          arguments: restaurantModel),
       child: Column(
         children: [
           Container(

@@ -14,6 +14,7 @@ class IconTextField extends StatelessWidget {
     required this.inputType,
     this.maxleght,
     this.onTap,
+    this.onSubmit,
   }) : super(key: key);
 
   final String hintText;
@@ -24,6 +25,7 @@ class IconTextField extends StatelessWidget {
   final TextInputType inputType;
   final int? maxleght;
   final VoidCallback? onTap;
+  final Function(String value)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,8 @@ class IconTextField extends StatelessWidget {
       controller: controller,
       onTap: onTap,
       onChanged: onChanged,
+      onFieldSubmitted: (value) =>
+          onSubmit == null ? onSubmit : onSubmit!(value),
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       inputFormatters:
           maxleght == null ? [] : [LengthLimitingTextInputFormatter(maxleght)],

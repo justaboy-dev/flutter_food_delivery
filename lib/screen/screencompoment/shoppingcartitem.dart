@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
+import 'package:flutter_food_delivery_v1/service/appservice.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartItem extends StatelessWidget {
@@ -80,7 +81,9 @@ class ShoppingCartItem extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        (food.foodPrice * food.foodAmount).toString() + " VNĐ",
+                        AppService()
+                                .toMoney((food.foodPrice * food.foodAmount)) +
+                            " VNĐ",
                         style: const TextStyle(
                           fontSize: defautfontsize + 2,
                           fontWeight: FontWeight.bold,

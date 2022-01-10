@@ -2,9 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
+import 'package:flutter_food_delivery_v1/controller/billcontroller.dart';
+import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
+import 'package:flutter_food_delivery_v1/controller/ordersreen.dart';
+import 'package:flutter_food_delivery_v1/model/billmodel.dart';
 import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
+import 'package:flutter_food_delivery_v1/screen/orderscreen/orderscreen.dart';
+import 'package:flutter_food_delivery_v1/service/fetchdata.dart';
 import 'package:flutter_food_delivery_v1/service/getstorage.dart';
 import 'package:get/get.dart';
+import 'package:objectid/objectid.dart';
 
 class ShoppingCartController extends GetxController with StateMixin {
   RxDouble total = 0.0.obs;
@@ -21,6 +28,7 @@ class ShoppingCartController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     var list = GetStorageService().getFromStorage();
     if (list.isEmpty) {
+      listFood.clear();
       change(null, status: RxStatus.empty());
     } else {
       listFood.value = list;
@@ -93,8 +101,9 @@ class ShoppingCartController extends GetxController with StateMixin {
           .foodAmount++;
     }
     GetStorageService().pushToStorage(listItem);
-    final shoppingCartController = Get.find<ShoppingCartController>();
-    shoppingCartController.loadShopingCart();
+    loadShopingCart();
+    HomeScreenController controller = Get.find<HomeScreenController>();
+    controller.getNumberOfItem();
     Get.snackbar(
       "",
       "",
@@ -115,5 +124,34 @@ class ShoppingCartController extends GetxController with StateMixin {
       duration: const Duration(milliseconds: 1500),
     );
     change(null, status: RxStatus.success());
+  }
+
+  void onBooking() async {
+    var listFood = GetStorageService().getFromStorage();
+    List<FoodId> list = [];
+    double cash = 0;
+    for (var element in listFood) {
+      cash += (element.foodPrice * element.foodAmount);
+      list.add(FoodId(element.foodID, element.foodAmount));
+    }
+
+    var user = GetStorageService().readUser();
+    BillModel bill = BillModel(ObjectId().hexString, user.userID.toString(),
+        listFood[0].restaurantID, "", "Booking", cash, list, 0);
+    var success = await FetchData().postBill(bill);
+    if (success) {
+      await Get.to(() => const OrderScreen(),
+          arguments: bill.billId,
+          curve: Curves.fastOutSlowIn,
+          duration: const Duration(milliseconds: 300),
+          transition: Transition.rightToLeftWithFade);
+      Get.delete<OrderScreenController>();
+      GetStorageService().earaserStorage();
+      loadShopingCart();
+      HomeScreenController controller = Get.find<HomeScreenController>();
+      BillController billController = Get.find<BillController>();
+      billController.onLoadBill();
+      controller.getNumberOfItem();
+    }
   }
 }

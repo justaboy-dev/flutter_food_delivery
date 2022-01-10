@@ -1,4 +1,7 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:open_route_service/open_route_service.dart';
 
 class LocationService {
   Position position = Position(
@@ -10,6 +13,9 @@ class LocationService {
       heading: 1,
       speed: 1,
       speedAccuracy: 1);
+
+  final OpenRouteService client =
+      OpenRouteService(apiKey: dotenv.env["OPENROUTEAPIKEY"].toString());
 
   Future<Position> getLocation() async {
     var serviceEnable = await Geolocator.isLocationServiceEnabled();
@@ -35,5 +41,21 @@ class LocationService {
     var distance = Geolocator.distanceBetween(currentLocation.latitude,
         currentLocation.longitude, latitude, longtitude);
     return distance;
+  }
+
+  Future<List<LatLng>> getPoly(Position start, Position end) async {
+    final List<ORSCoordinate> routeCoordinates =
+        await client.directionsRouteCoordsGet(
+      startCoordinate:
+          ORSCoordinate(latitude: start.latitude, longitude: start.longitude),
+      endCoordinate:
+          ORSCoordinate(latitude: end.latitude, longitude: end.longitude),
+      //ORSCoordinate(latitude: end.latitude, longitude: end.longitude),
+    );
+
+    final List<LatLng> routePoints = routeCoordinates
+        .map((coordinate) => LatLng(coordinate.latitude, coordinate.longitude))
+        .toList();
+    return routePoints;
   }
 }

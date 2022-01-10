@@ -33,9 +33,19 @@ class MappickController extends GetxController {
   }
 
   void moveLocation() {
-    LocationService().getLocation().then((value) {
+    LocationService().getLocation().then((value) async {
       position.value = value;
       mapController.move(LatLng(value.latitude, value.longitude), 17);
+      List<Placemark> fullAddress = await placemarkFromCoordinates(
+          position.value.latitude, position.value.longitude);
+
+      textEditingController.text = fullAddress[0].subThoroughfare.toString() +
+          ", " +
+          fullAddress[0].thoroughfare.toString() +
+          ", " +
+          fullAddress[0].subAdministrativeArea.toString() +
+          ", " +
+          fullAddress[0].administrativeArea.toString();
     });
     update();
   }
@@ -59,7 +69,7 @@ class MappickController extends GetxController {
     }
   }
 
-  void onLocationChanged(MapPosition changeposition, bool hasGesture) {
+  void onLocationChanged(MapPosition changeposition, bool hasGesture) async {
     if (hasGesture) {
       position.value = Position(
           longitude: changeposition.center!.longitude,
@@ -70,6 +80,16 @@ class MappickController extends GetxController {
           heading: position.value.heading,
           speed: position.value.speed,
           speedAccuracy: position.value.speedAccuracy);
+      List<Placemark> fullAddress = await placemarkFromCoordinates(
+          position.value.latitude, position.value.longitude);
+
+      textEditingController.text = fullAddress[0].subThoroughfare.toString() +
+          ", " +
+          fullAddress[0].thoroughfare.toString() +
+          ", " +
+          fullAddress[0].subAdministrativeArea.toString() +
+          ", " +
+          fullAddress[0].administrativeArea.toString();
     }
     // print(await placemarkFromCoordinates(
     //     position.center!.latitude, position.center!.longitude));

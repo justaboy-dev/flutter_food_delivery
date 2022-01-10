@@ -7,19 +7,28 @@ class FoodModel {
   String foodImage;
   double foodSpace;
   double foodMinute;
-  FoodModel(this.foodID, this.foodName, this.foodPrice, this.foodDescription,
-      this.foodAmount, this.foodImage, this.foodSpace, this.foodMinute);
-  factory FoodModel.fromMap(Map<String, dynamic> map) {
+  String restaurantID;
+  FoodModel(
+      this.foodID,
+      this.foodName,
+      this.foodPrice,
+      this.foodDescription,
+      this.foodAmount,
+      this.foodImage,
+      this.foodSpace,
+      this.foodMinute,
+      this.restaurantID);
+  factory FoodModel.fromMap(Map<dynamic, dynamic> map) {
     return FoodModel(
-      map["_id"].toString(),
-      map["FoodName"].toString(),
-      double.parse(map["Price"].toString()),
-      map["Description"].toString(),
-      int.parse(map["Amount"].toString()),
-      map["ImgFood"].toString(),
-      double.parse(map["Space"].toString()),
-      double.parse(map["Minute"].toString()),
-    );
+        map["_id"].toString(),
+        map["FoodName"].toString(),
+        double.parse(map["Price"].toString()),
+        map["Description"].toString(),
+        int.parse(map["Amount"].toString()),
+        map["ImgFood"].toString(),
+        double.parse(map["Space"].toString()),
+        double.parse(map["Minute"].toString()),
+        map["restaurantID"]);
   }
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -31,6 +40,7 @@ class FoodModel {
       "ImgFood": foodImage,
       "Space": foodSpace,
       "Minute": foodMinute,
+      "restaurantID": restaurantID
     };
   }
 }

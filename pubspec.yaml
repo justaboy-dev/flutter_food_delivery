@@ -41,7 +41,6 @@ dependencies:
   geolocator: ^8.0.1
   get: ^4.6.1
   get_storage: ^2.0.3
-  google_maps_flutter: ^2.1.1
   image_picker: ^0.8.4+4
   latlong2: ^0.8.1
   loading_indicator: ^3.0.2
@@ -49,6 +48,13 @@ dependencies:
   salomon_bottom_bar: ^3.2.0
   we_slide: ^2.2.1
   smooth_page_indicator: ^1.0.0+2
+  elastic_client: ^0.3.9
+  intl: ^0.17.0
+  animate_do: ^2.0.0
+  linear_progress_bar: ^1.1.0
+  switcher_button: ^0.0.4
+  url_launcher: ^6.0.17
+  objectid: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0

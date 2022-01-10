@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
@@ -75,24 +76,27 @@ class UploadAvatar extends StatelessWidget {
                     const Spacer(),
                     GestureDetector(
                       onTap: controller.onChooseImage,
-                      child: Container(
-                        width: size.width * 0.8,
-                        height: size.height * 0.45,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: primaryColor.withOpacity(0.8), width: 3),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        child: controller.obx(
-                          (state) => Image.file(
-                            File(controller.filePath.value),
-                            fit: BoxFit.cover,
+                      child: FlipInY(
+                        duration: const Duration(milliseconds: 1300),
+                        child: Container(
+                          width: size.width * 0.8,
+                          height: size.height * 0.45,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: primaryColor.withOpacity(0.8), width: 3),
+                            borderRadius: BorderRadius.circular(3),
                           ),
-                          onEmpty: Padding(
-                            padding: const EdgeInsets.all(60.0),
-                            child: SvgPicture.asset(
-                              "assets/icons/gallery.svg",
-                              width: size.width * 0.3,
+                          child: controller.obx(
+                            (state) => Image.file(
+                              File(controller.filePath.value),
+                              fit: BoxFit.cover,
+                            ),
+                            onEmpty: Padding(
+                              padding: const EdgeInsets.all(60.0),
+                              child: SvgPicture.asset(
+                                "assets/icons/gallery.svg",
+                                width: size.width * 0.3,
+                              ),
                             ),
                           ),
                         ),

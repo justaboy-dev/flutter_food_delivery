@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/model/addressmodel.dart';
-import 'package:flutter_food_delivery_v1/model/foodmodel.dart';
 
 class RestaurantModel {
   String restaurantID;
@@ -10,7 +9,6 @@ class RestaurantModel {
   TimeOfDay restaurantCloseTime;
   double restaurantRate;
   double restaurantSpace;
-  List<FoodModel> restaurantFood;
   Address restaurantAddress;
 
   RestaurantModel(
@@ -18,7 +16,6 @@ class RestaurantModel {
       this.restaurantName,
       this.restaurantOpenTime,
       this.restaurantRate,
-      this.restaurantFood,
       this.restaurantImage,
       this.restaurantSpace,
       this.restaurantCloseTime,
@@ -31,8 +28,6 @@ class RestaurantModel {
             hour: int.parse(map["Opentime"].split(":")[0]),
             minute: int.parse(map["Opentime"].split(":")[1])),
         double.parse(map["Rate"].toString()),
-        List<FoodModel>.from(
-            map["Food"].map((item) => FoodModel.fromMap(item)).toList()),
         map["Image"],
         double.parse(map["Space"].toString()),
         TimeOfDay(
@@ -48,13 +43,12 @@ class RestaurantModel {
           ":" +
           restaurantOpenTime.minute.toString(),
       "Rate": restaurantRate,
-      "Food": restaurantFood,
       "Image": restaurantImage,
       "Space": restaurantSpace,
       "Closetime": restaurantCloseTime.hour.toString() +
           ":" +
           restaurantCloseTime.minute.toString(),
-      "restaurantAddress": restaurantAddress,
+      "address": restaurantAddress.toMap(),
     };
   }
 }

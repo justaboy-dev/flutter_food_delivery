@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
@@ -41,23 +42,29 @@ class _SignInScreenState extends State<SignInScreen> {
                     const SizedBox(
                       height: 40,
                     ),
-                    SvgPicture.asset(
-                      "assets/images/app_background.svg",
-                      height: size.height * 0.22,
-                    ),
-                    const Text(
-                      "FoodNinja",
-                      style: TextStyle(
-                        fontFamily: "Righteus",
-                        fontSize: defautfontsize + 40,
-                        color: primaryColor,
+                    FadeInRightBig(
+                      child: SvgPicture.asset(
+                        "assets/images/app_background.svg",
+                        height: size.height * 0.22,
                       ),
                     ),
-                    const Text(
-                      "Nhanh như một nhẫn giả",
-                      style: TextStyle(
-                          fontSize: defautfontsize + 10,
-                          fontWeight: FontWeight.bold),
+                    FadeInRightBig(
+                      child: const Text(
+                        "FoodNinja",
+                        style: TextStyle(
+                          fontFamily: "Righteus",
+                          fontSize: defautfontsize + 40,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                    FadeInRightBig(
+                      child: const Text(
+                        "Nhanh như một nhẫn giả",
+                        style: TextStyle(
+                            fontSize: defautfontsize + 10,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const SizedBox(
                       height: 60,

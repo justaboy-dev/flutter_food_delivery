@@ -12,7 +12,7 @@ class GetStorageService {
   }
 
   bool readFirstLogin() {
-    return box.read("isFirstLogin") ?? true;
+    return box.read("isFirstLogin") ?? false;
   }
 
   void writeIsLogin(bool value) {
@@ -55,5 +55,10 @@ class GetStorageService {
     var user = readUser();
     box.write(user.userID.toString(),
         jsonEncode(pushItem.map((e) => e.toMap()).toList()));
+  }
+
+  void earaserStorage() async {
+    var user = readUser();
+    await box.remove(user.userID.toString());
   }
 }

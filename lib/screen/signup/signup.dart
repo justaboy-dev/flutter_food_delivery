@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/button.dart';
 import 'package:flutter_food_delivery_v1/compoment/passwordfield.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/signupcontroller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:switcher_button/switcher_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -40,23 +42,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 40,
                     ),
-                    SvgPicture.asset(
-                      "assets/images/app_background.svg",
-                      height: size.height * 0.22,
-                    ),
-                    const Text(
-                      "FoodNinja",
-                      style: TextStyle(
-                        fontFamily: "Righteus",
-                        fontSize: defautfontsize + 40,
-                        color: primaryColor,
+                    FadeInRightBig(
+                      child: SvgPicture.asset(
+                        "assets/images/app_background.svg",
+                        height: size.height * 0.22,
                       ),
                     ),
-                    const Text(
-                      "Nhanh như một nhẫn giả",
-                      style: TextStyle(
-                          fontSize: defautfontsize + 10,
-                          fontWeight: FontWeight.bold),
+                    FadeInRightBig(
+                      child: const Text(
+                        "FoodNinja",
+                        style: TextStyle(
+                          fontFamily: "Righteus",
+                          fontSize: defautfontsize + 40,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                    FadeInRightBig(
+                      child: const Text(
+                        "Nhanh như một nhẫn giả",
+                        style: TextStyle(
+                            fontSize: defautfontsize + 10,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const SizedBox(
                       height: 30,
@@ -83,6 +91,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: controller.passwordController,
                       hintText: "Mật khẩu...",
                     )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Text("Đăng ký tài xế"),
+                        const Spacer(),
+                        Obx(
+                          () => SwitcherButton(
+                            offColor: Colors.green.shade100,
+                            onColor: Colors.green.shade800,
+                            value: controller.isDriver.value,
+                            onChange: (value) => controller.onSwitch(value),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                     const Spacer(),
                     CustomButton(
                       text: "Đăng ký",

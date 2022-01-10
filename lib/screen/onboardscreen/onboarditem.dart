@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,28 +26,38 @@ class OnboardItem extends StatelessWidget {
               const Spacer(
                 flex: 1,
               ),
-              SvgPicture.asset(
-                svgAsset,
-                height: size.height * 0.4,
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              Text(
-                tittle,
-                style: const TextStyle(
-                  fontFamily: "Righteus",
-                  fontSize: defautfontsize + 40,
-                  color: primaryColor,
+              FlipInY(
+                duration: const Duration(milliseconds: 1200),
+                child: SvgPicture.asset(
+                  svgAsset,
+                  height: size.height * 0.4,
                 ),
               ),
               const Spacer(
                 flex: 1,
               ),
-              Text(
-                subTittle,
-                style: const TextStyle(
-                    fontSize: defautfontsize + 10, fontWeight: FontWeight.bold),
+              ZoomIn(
+                duration: const Duration(milliseconds: 1200),
+                child: Text(
+                  tittle,
+                  style: const TextStyle(
+                    fontFamily: "Righteus",
+                    fontSize: defautfontsize + 40,
+                    color: primaryColor,
+                  ),
+                ),
+              ),
+              const Spacer(
+                flex: 1,
+              ),
+              ZoomIn(
+                duration: const Duration(milliseconds: 1200),
+                child: Text(
+                  subTittle,
+                  style: const TextStyle(
+                      fontSize: defautfontsize + 10,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               const Spacer(
                 flex: 2,

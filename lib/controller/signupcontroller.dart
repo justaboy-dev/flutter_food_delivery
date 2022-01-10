@@ -8,22 +8,20 @@ class SignUpController extends GetxController {
   Rx<String> username = "".obs;
   Rx<String> phoneNumber = "".obs;
   Rx<String> password = "".obs;
+  RxBool isDriver = false.obs;
   final formKey = GlobalKey<FormState>();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phonenumberController = TextEditingController();
+
+  void onSwitch(bool value) {
+    isDriver.value = value;
+  }
 
   void onSignUp() async {
     if (formKey.currentState!.validate()) {
       Response response =
           await Authencation().checkExitPhoneNumber(phonenumberController.text);
-      if (response.statusCode == 200) {
-        Get.to(
-          () => const FillBioScreen(),
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.fastOutSlowIn,
-          transition: Transition.rightToLeftWithFade,
-        );
-      } else {
+      if (response.body["success"]) {
         Get.snackbar(
           "",
           "",
@@ -42,6 +40,13 @@ class SignUpController extends GetxController {
           animationDuration: const Duration(milliseconds: 200),
           isDismissible: true,
           duration: const Duration(milliseconds: 1500),
+        );
+      } else {
+        Get.to(
+          () => const FillBioScreen(),
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.fastOutSlowIn,
+          transition: Transition.rightToLeftWithFade,
         );
       }
     }

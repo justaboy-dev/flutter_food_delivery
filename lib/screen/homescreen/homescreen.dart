@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/compoment/customloadingindicator.dart';
 import 'package:flutter_food_delivery_v1/screen/foodscreen/foodscreen.dart';
@@ -58,6 +59,7 @@ class HomePage extends StatelessWidget {
             padding: 2,
             child: IconTextField(
                 onTap: controller.onSearchBarTap,
+                onSubmit: (value) => controller.onSearchBarSubmit(),
                 controller: controller.findController,
                 hintText: "Tìm kiếm",
                 iconData: Icons.search,
@@ -83,8 +85,11 @@ class HomePage extends StatelessWidget {
                 physics: const ClampingScrollPhysics(),
                 itemCount: controller.restaurant.value.isEmpty ? 0 : 5,
                 itemBuilder: (context, index) {
-                  return RestaurantBuilder(
-                    restaurantModel: controller.restaurant.value[index],
+                  return FlipInY(
+                    duration: const Duration(milliseconds: 1500),
+                    child: RestaurantBuilder(
+                      restaurantModel: controller.restaurant.value[index],
+                    ),
                   );
                 },
               ),
@@ -104,15 +109,20 @@ class HomePage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: 220,
+            height: 235,
             child: controller.obx(
               (state) => ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const ClampingScrollPhysics(),
-                itemCount: controller.food.value.isEmpty ? 0 : 10,
+                itemCount: controller.food.value.length > 10
+                    ? 10
+                    : controller.food.value.length,
                 itemBuilder: (context, index) {
-                  return FoodBuilder(
-                    food: controller.food.value[index],
+                  return FlipInY(
+                    duration: const Duration(milliseconds: 1500),
+                    child: FoodBuilder(
+                      food: controller.food.value[index],
+                    ),
                   );
                 },
                 shrinkWrap: true,
@@ -126,8 +136,10 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           sliver: Obx(() => SliverGrid(
                 delegate: SliverChildBuilderDelegate((builder, index) {
-                  return FoodBuilder(
-                    food: controller.nearestFood.value[index],
+                  return FadeInUpBig(
+                    child: FoodBuilder(
+                      food: controller.nearestFood.value[index],
+                    ),
                   );
                 }, childCount: controller.nearestFood.value.length),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

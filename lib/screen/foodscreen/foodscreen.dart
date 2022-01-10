@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
@@ -71,8 +72,11 @@ class FoodScreen extends StatelessWidget {
               padding: const EdgeInsets.all(0),
               sliver: Obx(() => SliverGrid(
                     delegate: SliverChildBuilderDelegate((builder, index) {
-                      return FoodBuilder(
-                        food: controller.food.value[index],
+                      return FlipInY(
+                        duration: const Duration(milliseconds: 1500),
+                        child: FoodBuilder(
+                          food: controller.food.value[index],
+                        ),
                       );
                     }, childCount: controller.food.value.length),
                     gridDelegate:

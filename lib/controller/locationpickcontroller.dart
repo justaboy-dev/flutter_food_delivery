@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_v1/constant/constant.dart';
 import 'package:flutter_food_delivery_v1/controller/fillbiocontroller.dart';
-import 'package:flutter_food_delivery_v1/controller/homescreencontroller.dart';
-import 'package:flutter_food_delivery_v1/controller/shopingcartcontroller.dart';
 import 'package:flutter_food_delivery_v1/controller/signupcontroller.dart';
 import 'package:flutter_food_delivery_v1/controller/uploadavatarcontroller.dart';
 import 'package:flutter_food_delivery_v1/model/addressmodel.dart';
@@ -21,10 +19,6 @@ import 'package:get/get.dart';
 class LocationPickController extends GetxController with StateMixin {
   RxString address = "".obs;
   late Position result;
-
-  ShoppingCartController shoppingCartController =
-      Get.put(ShoppingCartController());
-  HomeScreenController homescreencontroller = Get.put(HomeScreenController());
 
   @override
   void onInit() {
@@ -63,7 +57,7 @@ class LocationPickController extends GetxController with StateMixin {
           signup.passwordController.text,
           signup.phonenumberController.text,
           base64Encode(File(avatar.filePath.value).readAsBytesSync()),
-          false,
+          signup.isDriver.value,
           Address(result.latitude, result.longitude, address.value));
 
       Response respon = await Authencation().signUp(user);
@@ -88,8 +82,6 @@ class LocationPickController extends GetxController with StateMixin {
       );
       if (respon.statusCode == 201) {
         GetStorageService().writeIsLogin(true);
-        homescreencontroller.onInit();
-        shoppingCartController.onInit();
         Get.offAll(
           () => const SignUpSuccess(),
           duration: const Duration(milliseconds: 300),
