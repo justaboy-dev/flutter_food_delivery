@@ -61,9 +61,8 @@ class HomeScreenController extends GetxController with StateMixin {
     restaurant.value = await fetchData.fetchRestaurant();
     for (var item in restaurant.value) {
       item.restaurantSpace = double.parse(((await LocationService()
-                  .getDistancebetween(item.restaurantAddress.lattitude,
-                      item.restaurantAddress.longtitude) /
-              1000)
+              .getDistancebetween(item.restaurantAddress.lattitude,
+                  item.restaurantAddress.longtitude))
           .toStringAsFixed(1)));
       change(null, status: RxStatus.success());
     }

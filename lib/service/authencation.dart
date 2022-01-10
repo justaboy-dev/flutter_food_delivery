@@ -43,7 +43,7 @@ class Authencation extends GetConnect {
     if (res.body["success"] as bool) {
       httpClient.addAuthenticator((request) =>
           request.headers['Authorization'] =
-              jsonDecode(res.bodyString.toString())["token"]);
+              jsonDecode(res.bodyString.toString())["message"]);
       GetStorageService().writeFirstLogin(false);
       await saveUser(phoneNumber);
     }
@@ -59,8 +59,8 @@ class Authencation extends GetConnect {
     res = await get(url);
 
     if (res.statusCode == 200) {
-      GetStorageService()
-          .writeUser(UserModel.fromMap(jsonDecode(res.bodyString.toString())));
+      UserModel user = UserModel.fromMap(jsonDecode(res.bodyString.toString()));
+      GetStorageService().writeUser(user);
     }
   }
 
